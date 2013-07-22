@@ -3,10 +3,9 @@
 /**
  * Runkeeper plugin.
  * 
- * This plugin takes the content of the body and assumes that it is valid json, decodes it and replaces 
- * any of the original variables passed.
+ * This plugin takes a raw JSON string from ifttt's UP channel and converts it to a format
+ * accepted by the Runkeeper API.
  * 
- * This lets you mimic payloads expected by various webhook endpoints.
  */
 class Runkeeper extends Plugin {
     
@@ -42,12 +41,12 @@ class Runkeeper extends Plugin {
         
         $ch = curl_init('https://api.runkeeper.com/sleep');
         
-        //curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         
-        // Verify that we're actually connecting to the Runkeeper API
+        /*// Verify that we're actually connecting to the Runkeeper API
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-        curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/certs/api-runkeeper-com.crt");
+        curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/certs/api-runkeeper-com.crt");*/
         
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");                                                                     
         curl_setopt($ch, CURLOPT_POSTFIELDS, $json_string);                                                                  
