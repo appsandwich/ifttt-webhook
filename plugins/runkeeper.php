@@ -21,20 +21,20 @@
             }
             
             // Convert some of valuse from seconds to minutes (Runkeeper uses minutes, weirdly enough)
-            $json['total_sleep'] = $json['total_sleep'] / 60.0
-            $json['deep'] = $json['deep'] / 60.0
-            $json['light'] = $json['light'] / 60.0
-            $json['awake'] = $json['awake'] / 60.0
+            $json->total_sleep = $json->total_sleep / 60.0;
+            $json->deep = $json->deep / 60.0;
+            $json->light = $json->light / 60.0;
+            $json->awake = $json->awake / 60.0;
             
             // FellAsleepAt is formatted: August 23, 2013 at 11:01PM
             // Convert to Runkeeper's preferred format: Sat, 1 Jan 2011 00:00:00
             date_default_timezone_set('UTC');
-            $date = $json['timestamp'];
+            $date = $json->timestamp;
             $date_stripped = str_replace(" at ", " ", $date);
             $dateInfo = date_parse_from_format('F d, Y H:iA', $date_stripped);
-            $unixTimestamp = mktime($dateInfo['hour'], $dateInfo['minute'], $dateInfo['second'], $dateInfo['month'], $dateInfo['day'], $dateInfo['year'], $dateInfo['is_dst']);
+            $unixTimestamp = mktime($dateInfo['hour'], $dateInfo['minute'], $dateInfo['second'], $dateInfo['month'], $dateInfo['day'], $dateInfo['year']);
             $rk_timestamp = date("D, j M Y H:i:s", $unixTimestamp);
-            $json['timestamp'] = $rk_timestamp
+            $json->timestamp = $rk_timestamp;
             
             $json_string = json_encode($json);
             
@@ -52,9 +52,9 @@
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);                                                                      
             curl_setopt($ch, CURLOPT_HTTPHEADER, array(                                                                          
                 'Content-Type: application/vnd.com.runkeeper.NewSleep+json',                                                                                
-                'Content-Length: ' . strlen($json_string)),
-                'Authorization: Bearer YOUR_ACCESS_TOKEN'
-            );                                                                                                                   
+                'Content-Length: ' . strlen($json_string),
+                'Authorization: Bearer YOUR_ACCESS_TOKEN')
+            );
             
             $result = curl_exec($ch);
             
