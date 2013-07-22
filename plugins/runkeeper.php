@@ -28,10 +28,12 @@
             
             // FellAsleepAt is formatted: August 23, 2013 at 11:01PM
             // Convert to Runkeeper's preferred format: Sat, 1 Jan 2011 00:00:00
-            // timestamp_datetime = DateTime.parse(timestamp)
-            // formatted_timestamp = timestamp_datetime.strftime("%a, %d %b %Y %H:%M:%S")
-            $rk_timestamp = date("%D, %j %M %Y %H:%i:%s", strptime($json['timestamp'], "%F %d, %Y at %H:%i%A"));
-            __log("Converted timestamp: $rk_timestamp");
+            date_default_timezone_set('UTC');
+            $date = $json['timestamp'];
+            $date_stripped = str_replace(" at ", " ", $date);
+            $dateInfo = date_parse_from_format('F d, Y H:iA', $date_stripped);
+            $unixTimestamp = mktime($dateInfo['hour'], $dateInfo['minute'], $dateInfo['second'], $dateInfo['month'], $dateInfo['day'], $dateInfo['year'], $dateInfo['is_dst']);
+            $rk_timestamp = date("D, j M Y H:i:s", $unixTimestamp);
             $json['timestamp'] = $rk_timestamp
             
             $json_string = json_encode($json);
