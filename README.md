@@ -1,7 +1,7 @@
 ifttt-webhook
 =============
 
-A webhook middleware for the ifttt.com service
+A webhook middleware for the ifttt.com service (with bundled Runkeeper API plugin)
 
 #How To Use
 1. Change your ifttt.com wordpress server to <http://ifttt.captnemo.in>.
@@ -60,3 +60,5 @@ Just clone the git repo to some place, and use that as the wordpress installatio
 
 #About this Fork
 This is a modification of the original repo <https://github.com/captn3m0/ifttt-webhook> created by Captn3mo, made by Marcus Povey <http://www.marcus-povey.co.uk>.
+
+Further modified by Vinny Coyne <http://www.vinnycoyne.com> to include the runkeeper plugin.
